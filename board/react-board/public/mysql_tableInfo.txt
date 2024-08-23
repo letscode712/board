@@ -1,0 +1,22 @@
+CREATE USER root@'%' IDENTIFIED BY '1234';
+GRANT ALL PRIVILEGES ON testdb.* TO root@'localhost';
+USE testdb;
+SELECT USER FROM USER;
+SHOW GRANTS FOR root@'localhost';
+
+CREATE TABLE movielist(
+	num INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    writer VARCHAR(32) NOT NULL,
+    title VARCHAR(64) NOT NULL,
+    content VARCHAR(32) NOT NULL,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP;
+);
+
+SHOW COLUMNS FROM movielist IN testdb;
+
+INSERT INTO movielist (writer, title, content) VALUES ('Wonder', 'R. J. Palacio', 'fiction');
+INSERT INTO movielist (writer, title, content) VALUES ('Same as Ever', 'Morgan Housel', 'essay');
+INSERT INTO movielist (writer, title, content) VALUES ('Go as a River', 'Shelley Read', 'fiction');
+INSERT INTO movielist (writer, title, content) VALUES ('A Little Life', 'Yanagihara', 'essay');
+
+SELECT * FROM movielist;
