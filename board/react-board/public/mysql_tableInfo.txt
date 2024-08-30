@@ -20,3 +20,5 @@ INSERT INTO movielist (writer, title, content) VALUES ('Go as a River', 'Shelley
 INSERT INTO movielist (writer, title, content) VALUES ('A Little Life', 'Yanagihara', 'essay');
 
 SELECT * FROM movielist;
+
+

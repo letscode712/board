@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 
 const BoardGetList = (props) => {
     const { list, cnt, clickAction } = props; //비구조화 할당
-    const navigate = useNavigate();
+    const navigate = useNavigate(); //link를 사용하지 않고 다른 페이지로 이동할 때 사용하는 훅
 
     const handleTdClick = (e) => {
         const { num }  = e.currentTarget.dataset;

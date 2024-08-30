@@ -31,7 +31,7 @@ const ViewBoard = (props) => {
         }).catch(e =>  console.log(e));
     }
 
-    useEffect(() => {
+    useEffect(() => { //렌더링 될 때마다 특정 작업 수행
         restCall('GET', '/selectBoard', {num: clickNum}).then(res => {
             setViewBoardList({list: res, cnt:1});
         }).catch(e =>  console.log(e));
@@ -45,7 +45,7 @@ const ViewBoard = (props) => {
             <button onClick={handleEditClick}>수정</button>
             <button onClick={handleDeleteClick}>삭제</button>
         </React.Fragment>
-    )
+    );
 }
 
 export default ViewBoard;

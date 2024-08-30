@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 
 const AddBoard = (props) => {
     const [ inputBoard, setInputBoard ] = useState( { list: [{num:'', writer:'', title:'', content:'', date:''}], cnt: 1 } );
-    const navigate = useNavigate();
+    const navigate = useNavigate(); //useNavigate로 전송한 데이터 받는 훅
 
     const handleInput = (e) => {
         console.log(e);
