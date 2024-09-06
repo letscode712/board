@@ -26,7 +26,9 @@ const AddBoard = (props) => {
     return (
         <React.Fragment>
             <CommonTitle titleName={'게시판 등록'}/>
-            <BoardEditList list={inputBoard.list} inputList={(value) => {handleInput(value)}}/>
+            <BoardEditList list={inputBoard.list} inputList={(value) => {
+                handleInput(value)
+            }}/>
             <button onClick={handleAddBtnClick}>등록</button>
         </React.Fragment>
     )

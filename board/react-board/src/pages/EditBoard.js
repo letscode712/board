@@ -39,7 +39,7 @@ const EditBoard = (props) => {
             <button onClick={handleEditClick}>수정</button>
             <button onClick={handleBtnClick}>취소</button>
         </React.Fragment>
-    )
+    );
 }
 
 export default EditBoard;

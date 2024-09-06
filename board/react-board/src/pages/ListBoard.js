@@ -1,3 +1,5 @@
+//초기화면 ListBoard.js 이자, 테이블 조회하면 나오는 selectBoard.js 이다.
+
 import React, {useEffect, useRef, useState} from "react";
 import CommonTitle from "../components/common/CommonTitle";
 import BoardGetList from "../components/jobList/BoardGetList";
@@ -44,11 +46,11 @@ const ListBoard = (props) => {
         navigate('/addBoard'); //해당 페이지로 이동됨.
     }
 
-    useEffect(() => { //렌더링 될때마다 액션 수행됨
+    useEffect(() => {//searchInfo가 바뀌면 리렌더링 됨
         inputRef.current.value = inputState.inputVal;
         selectRef.current.value = inputState.categoryVal;
         getList(); //리스트 받아오고
-    }, [searchInfo]); //정보조회 배열로 검사함
+    }, [searchInfo]);
 
 
     return (
@@ -66,7 +68,7 @@ const ListBoard = (props) => {
             <button className={'btn'} onClick={handleAddClick}>등록</button>
             <BoardGetList list={boardList.list} cnt={boardList.cnt}  clickAction={handleTdClick}/>
         </React.Fragment>
-    )
+    );
 }
 
 export default ListBoard;

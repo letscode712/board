@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import TableFormat from "../common/TableFormat";
 
-const BoardEditList = (props) => {
-    const {list, inputList} = props;
-    const [ inputBoard, setInputBoard ] = useState( { list: props.list, cnt: 1 } );
+const BoardEditList = ({list, inputList}) => {
+    const [ inputBoard, setInputBoard ] = useState( { list: list, cnt: 1 } );
 
     const handleInput = (e) => {
         const { index } = e.currentTarget.dataset;

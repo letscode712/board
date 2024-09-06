@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'; //redux store를 생성함. store는 애플리케이션의 전역 상태를 관리하는 객체..여러 리듀서를 결합해서 상태관리
+import { configureStore } from '@reduxjs/toolkit'; //redux store를 생성함. createStore보다 간편하게 스토어 설정 가능
 import SearchInputVal from "../reducer/SearchInputVal";
 
 export default configureStore({ //스토어를 내보내서 애플리케이션 전체에 사용함
