@@ -41,7 +41,7 @@ def editBoard(writer, title, content, num):
     db = get_db()
     cur = db.cursor()
     cur.execute(sql)
-    result = cur.rowcount  # UPDATE 후 변경된 행의 수를 반환
+    result = getResults(cur)
     db.commit()
 
     return result
