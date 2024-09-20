@@ -1,13 +1,12 @@
 from config.db import get_db
-from service.utils import *
-
+from .utils import *
 
 def getBoardList(num, inputVal, category):
 
-    sql = "SELECT * FROM board WHERE 1=1 "
+    sql = "SELECT * FROM movielist WHERE 1=1 "
 
     if num != '' and inputVal == '':
-        sql += f'AND num = "{num}" '
+        sql += f' AND num = "{num}" '
     if category == 'num':
         sql += f'AND num = "{inputVal}" '
     if category == 'writer':
@@ -25,7 +24,7 @@ def getBoardList(num, inputVal, category):
 
 
 def addBoard(writer, title, content):
-    sql = f"INSERT INTO board (writer, title, content, date) VALUES ('{writer}', '{title}', '{content}', now())"
+    sql = f"INSERT INTO movielist (writer, title, content, date) VALUES ('{writer}', '{title}', '{content}', now())"
 
     db = get_db()
     cur = db.cursor()
@@ -42,13 +41,13 @@ def editBoard(writer, title, content, num):
     db = get_db()
     cur = db.cursor()
     cur.execute(sql)
-    result = getResults(cur)
+    result = cur.rowcount  # UPDATE 후 변경된 행의 수를 반환
     db.commit()
 
     return result
 
 def deleteBoard(num):
-    sql = f"DELETE From board where num = {num}"
+    sql = f"DELETE From movielist where num = {num}"
 
     db = get_db()
     cur = db.cursor()

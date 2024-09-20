@@ -18,7 +18,7 @@ const BoardGetList = (props) => {
     return (
         <TableFormat>
             <thead>
-            <tr>
+            <tr className="trCss">
                 <th className='w10p'>num</th>
                 <th className='w20p'>writer</th>
                 <th className='w20p'>title</th>

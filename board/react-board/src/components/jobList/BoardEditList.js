@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TableFormat from "../common/TableFormat";
 
-const BoardEditList = ({list, inputList}) => {
+const BoardEditList = (props) => {
+    const {list, inputList} = props;
     const [ inputBoard, setInputBoard ] = useState( { list: list, cnt: 1 } );
 
     const handleInput = (e) => {
@@ -10,13 +11,13 @@ const BoardEditList = ({list, inputList}) => {
         const temp = inputBoard.list;
         temp[index] = { ...temp[index], [e.currentTarget.name]: e.currentTarget.value };
         setInputBoard({...inputBoard, list: temp});
-        inputList(inputBoard);
+        inputList(inputBoard.list);
     }
 
   return(
       <TableFormat>
           <thead>
-          <tr>
+          <tr className="trCss">
               <th className='w10p'>num</th>
               <th className='w20p'>writer</th>
               <th className='w20p'>title</th>
@@ -28,18 +29,18 @@ const BoardEditList = ({list, inputList}) => {
           {list.map((value, index) => {
                   return (
                       <tr key={index}>
-                          <td><input name="num" type="text" readOnly/></td>
-                          <td><input data-index={index} name="writer" type="text" onInput={handleInput} defaultValue={value.writer}/></td>
-                          <td><input data-index={index} name="title" type="text" onInput={handleInput} defaultValue={value.title}/></td>
-                          <td><input data-index={index} name="content" type="text" onInput={handleInput} defaultValue={value.content}/></td>
-                          <td><input name="date" type="text" readOnly/></td>
+                          <td><input className={'inputText'} name="num" type="text" readOnly/></td>
+                          <td><input className={'inputText'} data-index={index} name="writer" type="text" onInput={handleInput} defaultValue={value.writer || ''}/></td>
+                          <td><input className={'inputText'} data-index={index} name="title" type="text" onInput={handleInput} defaultValue={value.title  || ''}/></td>
+                          <td><input className={'inputText'} data-index={index} name="content" type="text" onInput={handleInput} defaultValue={value.content || ''}/></td>
+                          <td><input className={'inputText'} name="date" type="text" readOnly/></td>
                       </tr>
                   )
               })
           }
           </tbody>
       </TableFormat>
-  )
-}
+  );
+};
 
 export default BoardEditList;

@@ -5,7 +5,7 @@ const CommonTitle = (props) => {
 
     return (
         <div>
-            <h3>{titleName}</h3>
+            <h1 className={'pageTitle'}>{titleName}</h1>
         </div>
 
     )

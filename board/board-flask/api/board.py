@@ -1,8 +1,8 @@
 import json
 from flask import Blueprint, jsonify, request
-import service.service as dbService
+from service import service as dbService
 
-bp = Blueprint("board", __name__, url_prefix='/')
+bp = Blueprint("testdb", __name__, url_prefix='/')
 
 @bp.route("/")
 def hello_world():
@@ -32,12 +32,9 @@ def insBoard():
 
 @bp.route("/editBoard", methods=['POST'])
 def editBoard():
-
     param = request.get_json()
-
     temp = dbService.editBoard(param['writer'], param['title'], param['content'], param['num'])
-
-    return json.dumps(temp, default=str)
+    return jsonify(temp)
 
 @bp.route("/deleteBoard", methods=['GET'])
 def deleteBoard():

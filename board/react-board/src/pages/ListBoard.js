@@ -7,12 +7,13 @@ import {restCall} from "../util";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import {reSetAction, searchAction} from "../reducer/SearchInputVal";
+import {FaRedo, FaSistrix, FaPlusCircle} from 'react-icons/fa';
 
 const ListBoard = (props) => {
     const { clickAction } = props;
     const [boardList, setBoardList] = useState({list: [], cnt:0});
     const [searchInfo, setSearchInfo] = useState({category: '',inputVal: ''});
-    let clickTr  = '';
+    //let clickTr  = '';
 
     const navigate = useNavigate(); //페이지 이동 및 데이터 전송 훅
     const dispatch =  useDispatch(); //action 발생하는 함수
@@ -25,16 +26,20 @@ const ListBoard = (props) => {
     }
 
     const handleSearchBtn = (e) => { //조회버튼 누르면 호출됨
-        if (inputRef.current !== undefined && selectRef.current !== undefined) { //입력의 현재와 선택의 현재값이 null이 아니라면
+        if (inputRef.current !== undefined && selectRef.current !== undefined) {
             setSearchInfo({category: selectRef.current.value, inputVal: inputRef.current.value}) //카테고리는 현재 내가 선택한 값을, 입력값은 현재 작성한 값을 설정해준 것을 찾도록 한다.
             dispatch(searchAction({inputVal : inputRef.current.value, categoryVal : selectRef.current.value} )); //조회한 것을 action으로 설정해서 발생시킴
         }
     }
 
-    const getList = () => { //조회한 것을 리스트로 받아옴
-        restCall('GET', '/selectBoard', {category :selectRef.current.value, inputVal: inputRef.current.value}).then(res => {
-            setBoardList({ list: res, cnt: res.length });
-        }).catch(e =>  console.log(e));
+    const getList = () => { //조회한 것을 리스트로 받아옴 (GET요청)
+        restCall('GET', '/selectBoard', {category :selectRef.current.value, inputVal: inputRef.current.value})
+            .then(res => {
+                setBoardList({ list: res, cnt: res.length });
+            }).catch(e =>  {
+            console.log(e);
+            //alert("게시글 불러오는 중 오류 발생");
+        });
     }
 
     const handleClearBtn = (e) => { //초기화 버튼
@@ -52,7 +57,6 @@ const ListBoard = (props) => {
         getList(); //리스트 받아오고
     }, [searchInfo]);
 
-
     return (
         <React.Fragment>
             <CommonTitle titleName={'게시판 목록'}/>
@@ -62,10 +66,10 @@ const ListBoard = (props) => {
                 <option key="writer" value="writer">writer</option>
                 <option key="title" value="title">title</option>
             </select>
-            <input type="text" ref={inputRef}/>
-            <button className={'btn'} onClick={handleSearchBtn}>조회</button>
-            <button className={'btn'} onClick={handleClearBtn}>초기화</button>
-            <button className={'btn'} onClick={handleAddClick}>등록</button>
+            <input type="text" size={50} placeholder="검색어를 입력하세요.." ref={inputRef}/>
+            <button className={'btnHome'} onClick={handleSearchBtn}><FaSistrix/>조회</button>
+            <button className={'btnHome'} onClick={handleClearBtn}><FaRedo/>초기화</button>
+            <button className={'btnHome'} onClick={handleAddClick}><FaPlusCircle/>등록</button>
             <BoardGetList list={boardList.list} cnt={boardList.cnt}  clickAction={handleTdClick}/>
         </React.Fragment>
     );

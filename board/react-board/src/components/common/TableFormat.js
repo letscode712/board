@@ -1,7 +1,6 @@
 import React from 'react';
 
 const TableFormat = (props) => {
-
     return (
         <div className="table table-striped">
             <div className="table-wrap">

@@ -5,10 +5,10 @@ DB_HOST = "127.0.0.1"
 DB_USER = "root"
 DB_PASSWORD = "1234"
 DB_PORT = 3306
-DATABASE = "reacttest"
-DB_URL = "mysql+pymysql://root:1234@127.0.0.1:3306/reacttest"
+DATABASE = "testdb"
+DB_URL = "mysql+pymysql://root:1234@localhost:3306/testdb"
 
-SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:1234@127.0.0.1:3306/reacttes"
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:1234@localhost:3306/testdb"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # DEBUG 모드
