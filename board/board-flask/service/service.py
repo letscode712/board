@@ -36,7 +36,7 @@ def addBoard(writer, title, content):
 
 
 def editBoard(writer, title, content, num):
-    sql = f"UPDATE board SET writer = '{writer}', title = '{title}', content = '{content}', date = now() where num = '{num}'"
+    sql = f"UPDATE movielist SET writer = '{writer}', title = '{title}', content = '{content}', date = now() where num = '{num}'"
 
     db = get_db()
     cur = db.cursor()

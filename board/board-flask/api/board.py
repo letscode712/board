@@ -34,6 +34,7 @@ def insBoard():
 def editBoard():
     param = request.get_json()
     temp = dbService.editBoard(param['writer'], param['title'], param['content'], param['num'])
+
     return jsonify(temp)
 
 @bp.route("/deleteBoard", methods=['GET'])
