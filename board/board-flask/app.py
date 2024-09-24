@@ -12,6 +12,7 @@ def create_app():
 
     from api import board
 
+
     app.register_blueprint(board.bp)
 
     return app

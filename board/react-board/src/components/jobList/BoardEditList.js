@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import TableFormat from "../common/TableFormat";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const BoardEditList = (props) => {
     const {list, inputList} = props;

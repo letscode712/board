@@ -23,7 +23,7 @@ const DeleteBoard = () =>{
 
     const handleCancelClick = () =>{
         navigate('/'); //메인 페이지로 이동함
-    }
+    };
 
     return (
         <div>

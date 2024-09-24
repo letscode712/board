@@ -41,8 +41,8 @@ def editBoard(writer, title, content, num):
     db = get_db()
     cur = db.cursor()
     cur.execute(sql)
-    result = getResults(cur)
     db.commit()
+    result = getResults(cur)
 
     return result
 

@@ -22,7 +22,7 @@ const ListBoard = (props) => {
     const selectRef = useRef(null); //객체 안의 값이 실제 엘리먼트를 가리킴
 
     const handleTdClick = (target) => {
-        navigate("/viewBoard", {state:{num : target.num}}); //viewBoard 페이지로 이동하면서, 상태를 객체의 num값으로 한 파라미터를 전송함
+        navigate("/viewBoard", {state:{list : target}}); //viewBoard 페이지로 이동하면서, 상태를 객체의 num값으로 한 파라미터를 전송함
     }
 
     const handleSearchBtn = (e) => { //조회버튼 누르면 호출됨

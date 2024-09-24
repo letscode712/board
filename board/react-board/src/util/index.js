@@ -20,22 +20,23 @@ export const restCall = async (method, path, data={}) => {
 
     url += path; //최종 url
 
-    // return await fetch(url, option).then(async res => {
-    //     try{
-    //         if(!res.ok){
-    //             throw new Error(`HTTP error: ${res.status}`);
-    //         }
-    //         return res.json();
-    //     }catch (error){
-    //         console.error('API 요청 오류: ', error); //에러 처리
-    //         throw error;  //에러 던지기
-    //     }
-    // });
+    //서버 응답처리
+    return await fetch(url, option).then(async res => {
+        try{
+            if(!res.ok){ //success가 아니면..
+                throw new Error(`HTTP error: ${res.status}`); //에러 던지기
+            }
+            return res.json(); //파싱해주고 서버로 응답처리해줌
+        }catch (error){
+            console.error('API 요청 오류: ', error); //에러 처리
+            throw error;  //에러 던지기
+        }
+    });
 
     //원래 코드
-    return await fetch(url, option)
-        .then(async res => {
-            console.log(res);
-        return res.json();
-    });
+    // return await fetch(url, option)
+    //     .then(async res => {
+    //         // console.log(res);
+    //     return res.json();
+    // });
 }
