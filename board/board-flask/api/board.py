@@ -1,21 +1,13 @@
 import json
-import ssl
 from flask import Blueprint, jsonify, request, redirect
 from service import service as dbService
 from http import HTTPStatus
 
 bp = Blueprint("testdb", __name__, url_prefix='/')
 
-bp.before_request
-def before_request():
-    if request.url.startswith('http://'):
-        url = request.url.replace('http://', 'https://', 1)
-        code=301
-        return redirect(url, code=code)
-
 @bp.route("/")
 def hello_world():
-    return 'Hello World!'
+    return 'Hello World!, this page is from Backend by python Flask'
 
 @bp.route("/selectBoard", methods=['GET'])
 def getBoardList():
@@ -45,11 +37,6 @@ def editBoard():
     temp = dbService.editBoard(param['writer'], param['title'], param['content'], param['num'])
 
     return jsonify(temp)
-    # return jsonify({
-    #     "ok" : True,
-    #     "message" : "게시글이 수정됨",
-    #     "data" : temp
-    # })
 
 @bp.route("/deleteBoard", methods=['GET'])
 def deleteBoard():
@@ -78,7 +65,34 @@ def post():
 
     return jsonify({"list": params, "status": HTTPStatus.OK})
 
+##review 불러오는 함수
+@bp.route('/getReview', methods=['GET'])
+def getReview():
+    param = request.get_json()
+
+    temp = dbService.getReview(param['writer'], param['content'])
+
+    return json.dump(temp, default=str, ensure_ascii=False).encode('utf8')
+
+##review 등록 함수
+@bp.route('/addReview', methods=['POST'])
+def insReview():
+    param = request.get_json()
+
+    temp = dbService.addReview(param['writer'], param['content'])
+
+    return json.dumps(temp, default=str)
+
+##review 수정 함수
+@bp.route('/editReview', methods=['POST'])
+def editReview():
+    param = request.get_json()
+    temp = dbService.editReview(param['writer'], param['content'])
+
+    return jsonify(temp)
+
+
 if __name__ == '__main__':
-    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    ssl_context.load_cert_chain(certfile='newcert.pem', keyfile='newkey.pem', password='secret')
-    bp.run(host="0.0.0.0", port=433, ssl_context=ssl_context, debug=True) #디버깅 모드로 Flask 실행
+    bp.run(debug=True) #디버깅 모드로 flask 실행
+    # bp.debug=True #디버깅 모드로 flask 실행
+

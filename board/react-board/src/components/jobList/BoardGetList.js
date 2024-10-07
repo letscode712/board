@@ -43,7 +43,7 @@ const BoardGetList = (props) => {
             }
             </tbody>
         </TableFormat>
-    )
+    );
 };
 
 export default BoardGetList;

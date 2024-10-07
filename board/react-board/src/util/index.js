@@ -1,3 +1,8 @@
+//utils 폴더:
+//유틸리티 함수 저장
+//데이터 포매팅, 유효성 검사, API 호출 등의 역할을 수행함
+
+//index.js 파일의 역할: 서버로 api 호출함
 export const restCall = async (method, path, data={}) => {
     let url = ' http://127.0.0.1:5000'; //기본 API 주소
     let option = {};
@@ -28,7 +33,7 @@ export const restCall = async (method, path, data={}) => {
             }
             return res.json(); //파싱해주고 서버로 응답처리해줌
         }catch (error){
-            console.error('API 요청 오류: ', error); //에러 처리
+            // console.error('API 요청 오류: ', error); //에러 처리
             throw error;  //에러 던지기
         }
     });

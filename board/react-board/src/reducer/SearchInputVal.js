@@ -1,3 +1,6 @@
+//액션과 리듀서를 하나의 파일에서 관리함
+//초기상태 만들고 리듀서도 관리해줌
+
 import { createSlice } from '@reduxjs/toolkit';
 
 export const SearchInputVal = createSlice({

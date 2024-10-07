@@ -1,4 +1,7 @@
-//리액트 프로젝트의 진입점. app 컴포넌트를 dom화면에 렌더링하며, 리덕스를 사용하기 때문에 리덕스 provider 설정도 포함됨.
+//리액트 프로젝트의 진입점.
+// app 컴포넌트를 dom화면에 렌더링
+// 리덕스를 사용하기 때문에 리덕스 provider 설정도 포함됨.
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './components/css/common.css';
@@ -13,6 +16,8 @@ import { Provider } from 'react-redux'  //Provider로 스토어 연결해줌
 import store from './store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 root.render(
     <HashRouter>
         <Provider store={store}>
