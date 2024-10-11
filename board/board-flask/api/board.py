@@ -1,4 +1,6 @@
 import json
+
+import flask
 from flask import Blueprint, jsonify, request, redirect
 from service import service as dbService
 from http import HTTPStatus
@@ -68,31 +70,58 @@ def post():
 ##review 불러오는 함수
 @bp.route('/getReview', methods=['GET'])
 def getReview():
-    param = request.get_json()
+    category = ''
 
-    temp = dbService.getReview(param['writer'], param['content'])
+    if request.args.get("category") != '':
+        category = request.args.get("category")
 
-    return json.dump(temp, default=str, ensure_ascii=False).encode('utf8')
+    temp = dbService.getReview(request.args.get('reviewNum',''), request.args.get('inputVal',''), category)
+
+    return json.dumps(temp, default=str, ensure_ascii=False).encode('utf8')
 
 ##review 등록 함수
 @bp.route('/addReview', methods=['POST'])
 def insReview():
     param = request.get_json()
+    temp = dbService.addReview(param['reviewNum'],param['postNum'], param['writer'], param['content'])
 
-    temp = dbService.addReview(param['writer'], param['content'])
-
-    return json.dumps(temp, default=str)
+    # return json.dumps(temp, default=str)
+    return jsonify(temp) #json형태로 결과 반환
 
 ##review 수정 함수
 @bp.route('/editReview', methods=['POST'])
 def editReview():
     param = request.get_json()
-    temp = dbService.editReview(param['writer'], param['content'])
+    temp = dbService.editReview(param['reviewNum'],param['postNum'], param['writer'], param['content'])
 
     return jsonify(temp)
 
+##review 삭제함수
+@bp.route('/deleteReview', methods=['GET'])
+def deleteReview():
+    temp = dbService.deleteBoard(request.args.get('reviewNum'))
+
+    return json.dumps(temp, default=str)
 
 if __name__ == '__main__':
     bp.run(debug=True) #디버깅 모드로 flask 실행
     # bp.debug=True #디버깅 모드로 flask 실행
+
+
+
+##### flask jsonify와 json.dumps의 차이점 ######
+#jsonify()는 json response를 보내기 위해 'application/json'으로 되어있는 flask.Response()객체 리턴함
+#리스트를 파라미터로 얻을 수 있음
+#flask 앱 내에서만 실행이 가능함
+# def jsonify(*args, **kwargs):
+#     if __debug__:
+#         _assert_have_json()
+#         return current_app.response_class(json.dumps(dict(*args, **kwargs),
+#                                                      indent=None if request.is_xhr else 2), mimetypes='application/json')
+
+# json.dumps()는 수동으로 mimetypes를 추가해줘야하는 encoded-string을 리턴함
+# flask가 알아서 판단해서 response를 자동으로 보내줌...직접적으로 사용해야함
+# response header fields는 default(text/html; charset=utf-80)으로 처리됨
+# jsonify()보다 다양한 타입을 파라미터로 받아올 수 있음
+# flask 앱 밖에서도 shell에서 바로 return을 받아볼 수 있음
 

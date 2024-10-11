@@ -61,21 +61,29 @@ def deleteBoard(num):
 
 
 ##review를 db에서 조회하는 sql문
-def getReview(writer, content):
-    sql= f"SELECT * FROM board2 WHERE 1=1"
+def getReview(reviewNum, inputVal, category):
+    sql= f"SELECT * FROM reviewlist WHERE 1=1"
+
+    if reviewNum != '' and inputVal == '':
+        sql += f' AND reviewNum = {reviewNum} '
+    if category == 'reviewNum':
+        sql += f'AND reviewNum = {inputVal} '
+    if category == 'writer':
+        sql += f'AND writer LIKE CONCAT("%", "{inputVal}", "%")'
+    if category == 'content':
+        sql += f'AND content LIKE CONCAT("%", "{inputVal}", "%")'
 
     db = get_db()
     cur= db.cursor()
     cur.execute(sql)
-    result = cur.rowcount
+    result = getResults(cur)
     db.commit()
 
     return result
 
-
 ##review 추가 시 board2라는 db로 리뷰가 추가되도록 한다.
-def addReview(writer, content):
-    sql = f"INSERT INTO board2 (writer, content) VALUES ('{writer}', '{content}')"
+def addReview(reviewNum, postNum, writer, content):
+    sql = f"INSERT INTO reviewlist (review_num, post_num, writer, content) VALUES ({reviewNum},{postNum},'{writer}','{content}')"
 
     db = get_db()
     cur = db.cursor()
@@ -83,17 +91,29 @@ def addReview(writer, content):
     result = cur.rowcount
     db.commit()
 
-    return result
-
+    # return result
+    return {"staus" : "success", "message" : "리뷰 등록 성공"}
 
 ##review를 수정하는 sql문
-def editReview(writer, content):
-    sql = f"UPDATE board2 SET writer='{writer}', content='{content}'"
+def editReview(reviewNum, postNum, writer, content):
+    sql = f"UPDATE reviewlist SET writer='{writer}', content='{content}' WHERE review_num={reviewNum} AND post_num={postNum}"
 
     db= get_db()
     cur = db.cursor()
     cur.execute(sql)
     db.commit()
     result = getResults(cur)
+
+    return result
+
+##review를 삭제하는 sql문
+def deleteReview(reviewNum):
+    sql = f"DELETE FROM reviewlist WHERE review_num={reviewNum}"
+
+    db = get_db()
+    cur = db.cursor()
+    cur.execute(sql)
+    result = getResults(cur)
+    db.commit()
 
     return result

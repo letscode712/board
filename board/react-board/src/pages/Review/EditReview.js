@@ -9,7 +9,8 @@ const EditReview = (props) =>{
     const navigate= useNavigate();
     const location = useLocation();
     const reviewA = location.state; //현재 클릭한 리뷰
-    const [editReview, setEditReview] = useState({review: [{writer:reviewA.writer, content: reviewA.content}], cnt:1});
+    const postNum = location.state.postNum; //게시글의 num
+    const [editReview, setEditReview] = useState({review: [{reviewNum: reviewA.num, postNum: postNum, writer:reviewA.writer, content: reviewA.content}], cnt:1});
 
     //리뷰 수정
     const handleInput = (value) =>{
@@ -48,8 +49,8 @@ const EditReview = (props) =>{
         <React.Fragment>
             <CommonTitle titleName={'리뷰 수정'}/>
             <EditReviewList review={editReview.review} inputReview={handleInput}/>
-            {/*<button className={'btn'} onClick={handleEditClick}><FaPen/>수정</button>*/}
-            {/*<button className={'btn'} onClick={handleCancelBtnClick}><FaChevronCircleLeft/>취소</button>*/}
+            <button className={'btn'} onClick={handleEditClick}><FaPen/>수정</button>
+            <button className={'btn'} onClick={handleCancelBtnClick}><FaChevronCircleLeft/>취소</button>
         </React.Fragment>
     );
 }

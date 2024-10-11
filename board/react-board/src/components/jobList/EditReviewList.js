@@ -1,65 +1,61 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import ReviewFormat from "../common/ReviewFormat";
 import {FaChevronCircleLeft, FaRegCommentDots} from "react-icons/fa";
 import {restCall} from "../../util";
 
 const EditReviewList = (props) =>{
-    const {review} = props; //수정할 리뷰와 저장 함수
-    const [editReview, setEditReview] = useState(review); //전달받은 리뷰를 수정할 리뷰로 설정하기
-    const navigate = useNavigate();
+    const {review, inputReview} = props; //수정할 리뷰와 저장 함수
+    const [ inputBoard, setInputBoard ] = useState( { review: review, cnt: 1 } );
 
-    //리뷰 내용 수정
+    //리뷰 내용 수정..배열을 사용하는 코드
     const handleInput = (e) =>{
-        // const {index} = e.currentTarget.dataset;
-        // const temp = editReview.review;
-        // temp[index] = {...temp[index], [e.currentTarget.name]: e.currentTarget.value};
-        // setEditReview({...editReview, review:temp});
         const {name, value} = e.target;
+        const {index} = e.currentTarget.dataset;
 
-        setEditReview((prevState)=>({
-            ...prevState,
-            [name]: value //해당 필드만 업데이트
-        }));
+        //리스트의 현재 인덱스를 업데이트
+        const temp = [...inputBoard.review]; //상태변환을 위해 복사한 배열을 사용...원본 배열에 바로 상태변환은 좋지 않음.
+        temp[index] = {...temp[index], [name]: value}; //복사한 배열을 변경해줌
+
+        setInputBoard({...inputBoard, review: temp}); //inputBoard를 새롭게 복사하고 바꾼 temp로 바꿔줌
     }
 
-    //저장 버튼 누르면 수정된 리뷰 저장
-    const handleAddBtnClick = (e) =>{
-        console.log('Submitting inputReview: ', editReview.review[0]); //editReview
+    //입력값 변경 핸들러..객체 형태의 review
+    // const handleInput = (e) => {
+    //     const {name, value} = e.target;
+    //     setInputBoard((prevState) => ({ //prevState라는 내장
+    //         review: {
+    //             ...prevState.review, //복사된 리뷰가 객체형태임
+    //             [name]:value
+    //         },
+    //         cnt:1
+    //     }));
+    // };
 
-        restCall('POST', '/addReview', editReview.review[0]) //editReview
-            .then(res=>{
-                alert('리뷰가 등록되었습니다.');
-                navigate(-1); //앞페이지로 이동
-            }).catch(error=>{
-                // console.error('리뷰 등록 오류: ', error);
-                alert('리뷰 등록 실패');
-        });
-    }
-
-    const handleCancelBtnClick = () =>{
-        navigate(-1);
-    }
+    //상태변환함수를 통해 바로 업데이트 되도록함.
+    useEffect(() => {
+        inputReview(inputBoard.review);
+    }, [inputBoard.review]);
 
     return(
-        <ReviewFormat titleName={'리뷰 수정'}>
+        <ReviewFormat>
             <div className={'review-item'}>
+                <h3>리뷰 #{review.reviewNum || 'N'}</h3>
                 <h4>작성자:
                     <input
                         className={'inputText'}
                         name="writer"
-                        defaultValue={editReview.writer || ''}
+                        defaultValue={inputReview.writer || ''}
                         onChange={handleInput}
                     />
                 </h4>
                 <textarea
                     className={'review-textarea'}
                     name="content"
-                    value={editReview.content || ''}
+                    //value로 하면 수정되지 않고 값만 보임..input창에서 수정하려면 defaultValue 사용할 것
+                    defaultValue={inputReview.content || ''}
                     onChange={handleInput}
                 />
-                <button className={'btn'} onClick={handleAddBtnClick}><FaRegCommentDots/>저장</button>
-                <button className={'btn'} onClick={handleCancelBtnClick}><FaChevronCircleLeft/>취소</button>
             </div>
         </ReviewFormat>
     );

@@ -65,7 +65,7 @@ const ListBoard = (props) => {
         //상태 업데이트
         setInputBoard({list: e, cnt:1});
 
-        console.log('After Input event(Suggested): ', inputBoard);//{list: Array(1), cnt:1}이고, Array(1)에 list[0] 값이 들어옴
+        console.log('After Input event(Suggested): ', inputBoard); //{list: Array(1), cnt:1}이고, Array(1)에 list[0] 값이 들어옴
         console.log('Updated inputBoard:', inputBoard.list[0]); //곧바로 list[0]의 값들이 출력됨..값 확인용
     };
 

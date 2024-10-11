@@ -5,6 +5,7 @@ import {useNavigate ,useLocation} from 'react-router-dom';
 import BoardGetList from "../components/jobList/BoardGetList";
 import {FaChevronCircleLeft, FaList, FaMinusCircle, FaPen, FaRegCommentDots} from "react-icons/fa";
 import BoardEditList from "../components/jobList/BoardEditList";
+import {state} from "pg/lib/native/query";
 
 const ViewBoard = (props) => {
     const { list, cnt, clickAction } = props;
@@ -13,8 +14,6 @@ const ViewBoard = (props) => {
     const [viewBoardList, setViewBoardList] = useState({list: [listA],cnt: 1});
     const [editList, setEditList] = useState( { list: [{num:listA.num, writer:listA.writer, title:listA.title, content:listA.content, date:listA.date}], cnt: 1 } );
     const navigate = useNavigate();
-    // const clickNum = location.state;
-    // console.log(clickNum)
 
     //게시글 수정을 누르면 나타나는 모달창
     const [modalOpen, setModalOpen] = useState(false); //모달창 표시 여부
@@ -77,8 +76,9 @@ const ViewBoard = (props) => {
     }
 
     //리뷰페이지로 이동
-    const handleReviewBtnClick = () =>{
-        navigate("/viewReview");
+    const handleReviewBtnClick = (e) =>{
+        navigate("/viewReview", { state: { postNum: listA.num } }); // 게시글num을 state로 전달
+        console.log("navigate viewReview: ", state);
     }
 
     // useEffect(() => { //렌더링 될 때마다 특정 작업 수행

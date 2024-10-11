@@ -3,8 +3,9 @@ import TableFormat from "../common/TableFormat";
 import {useLocation, useNavigate} from "react-router-dom";
 
 const BoardEditList = (props) => {
-    const {list, inputList} = props;
-    const [ inputBoard, setInputBoard ] = useState( { list: list, cnt: 1 } );
+    const {list, inputList} = props; //게시글 목록과 목록 저장 함수
+    const [ inputBoard, setInputBoard ] = useState( { list: list, cnt: 1 } ); //수정중인 데이터 관리변수와 상태 변환 함수
+    console.log("============list=====>",list)
 
     const handleInput = (e) => {
         const { index } = e.currentTarget.dataset;
