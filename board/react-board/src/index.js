@@ -17,8 +17,8 @@ import store from './store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-console.log("=======process=======>",process.env);
-console.log("======>",process.env.NODE_ENV);
+alert("====process.env====>", process.env.NODE_ENV);
+alert("====process.env.REACT_APP_REST_SERVER===>", process.env.REACT_APP_REST_SERVER);
 
 root.render(
     <HashRouter>

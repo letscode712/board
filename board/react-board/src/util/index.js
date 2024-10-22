@@ -4,7 +4,7 @@
 
 //index.js 파일의 역할: 서버로 api 호출함
 export const restCall = async (method, path, data={}) => {
-    let url = ' http://127.0.0.1:5000'; //기본 API 주소
+    let url = process.env.REACT_APP_API_URL; //API 주소: http://127.0.0.1:5000 -> .env 파일에 정의함
     let option = {};
 
     option.method = method;
