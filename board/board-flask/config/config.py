@@ -1,5 +1,3 @@
-"""Flask App configuration."""
-
 # DB 연결 설정
 DB_HOST = "127.0.0.1"
 DB_USER = "root"
